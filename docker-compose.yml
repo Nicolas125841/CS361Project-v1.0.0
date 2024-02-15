@@ -1,0 +1,59 @@
+# To build/run Dockers for client, microservices, and database:
+# Run Docker Desktop app
+# In Terminal (e.g., of VSCode):
+#   - "docker-compose build"
+#   - "docker-compose up"
+# In Docker Desktop app:
+#   - Click "play" icon to run client, microservices, and mongodb containers
+#   - Click client's "3000:80"
+# Safari should open to http://localhost:3000
+
+version: "3.8"
+services:
+  mongo:
+    image: mongo
+    volumes:
+      - ./mongo:/docker-entrypoint-initdb.d
+      - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh
+    ports:
+      - "27017:27017"
+  expense-rules-fetch:
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/finanticizer
+    build:
+      context: .
+      dockerfile: microservices/expense-rules-fetch/Dockerfile
+    ports:
+      - "5002:5002"
+    depends_on:
+      - mongo
+  expenses-fetch:
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/finanticizer
+    build:
+      context: .
+      dockerfile: microservices/expenses-fetch/Dockerfile
+    ports:
+      - "5003:5003"
+    depends_on:
+      - mongo
+  calculate-cash-flow:
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/finanticizer
+    build:
+      context: .
+      dockerfile: microservices/calculate-cash-flow/Dockerfile
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongo
+  client:
+    build:
+      context: .
+      dockerfile: client/Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - expense-rules-fetch
+      - expenses-fetch
+      - calculate-cash-flow

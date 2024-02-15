@@ -1,0 +1,6 @@
+node_modules/
+build/
+database_inputs/
+client/node_modules/
+server/node_modules/
+mongo
