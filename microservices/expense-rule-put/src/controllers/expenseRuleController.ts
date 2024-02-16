@@ -56,10 +56,11 @@ const putExpenseRules = async(req: Request, res: Response): Promise<void> => {
     // HERE'S THE START OF THE CODE I THINK YOU NEED TO EDIT,
     // FOCUSING ON CHANGING GET/"FIND" TO PUT/"SAVE" PER THE ABOVE EXAMPLE
     // "SAVE", AND CHANGING "EXPENSE" TO "EXPENSERULE"
-    const expenseRules = await ExpenseRule.find();
+    await new ExpenseRule.create(req.body);
+
     // PROBABLY THE END OF THE AREA YOU NEED TO EDIT
 
-    res.json(expenseRules);
+    res.json({ message: "Expense rule validated and saved to expense rules" });
   } catch (error) {
     res.status(500).send(error);
   }
