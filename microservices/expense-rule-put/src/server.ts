@@ -19,11 +19,8 @@ To preview web app:
 - Safari to http://localhost:3000 or http://192.168.1.56:3000
 */
 
-// NOTE: THIS FILE PROBABLY DOESN'T REQUIRE ANY MORE CHANGES
-
 const app = express();
 const PORT = process.env.PORT || 5004;
-// NOTE: I ALREADY DECONFLICTED THIS PORT NUMBER FROM THE OTHER MICROSERVICES; RECOMMEND NOT CHANGING
 
 const mongoUri =
   process.env.MONGO_URI || "mongodb://localhost:27017/finanticizer";
@@ -38,13 +35,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Routes
-// NOTE: I CHANGED THIS FROM "/API/EXPENSERULES TO /API/PUTEXPENSERULE"
 app.use("/api/putExpenseRule", expenseRuleRoutes);
 
 // Start the server
 app.listen(PORT, () => {
-  // NOTE: I ADDED "PUT" TO THIS MESSAGE 
-  // TO DIFFERENTIATE IT FROM THE OTHER EXPENSE RULE (FETCH) MICROSERVICE
   console.log(`Put Expense Rule microservice is running on port ${PORT}`);
 });
 

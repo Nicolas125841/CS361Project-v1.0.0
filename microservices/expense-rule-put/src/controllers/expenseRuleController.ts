@@ -7,6 +7,19 @@ import ExpenseRule from '../models/expenseRule';
 // That's why this service's structure appears very similar to the others. 
 const putExpenseRules = async(req: Request, res: Response): Promise<void> => {
   try {
+    // HERE'S AN EXAMPLE EXPENSE RULE JSON FROM THE MONGODB:
+    // {
+    //   '_id': {'$oid': '65ab45473bf311450147d61b'},
+    //   'name': 'Mortgage',
+    //   'amount': -7667,
+    //   'onDate': 2,
+    //   'typeOfDay': 'Non-holiday weekday after',
+    //   'freq': 'Monthly',
+    //   'startDate': null,
+    //   'endDate': null,
+    //   'account': 'S Chk'
+    // }
+
     // Create expense rule entity and save it to MongoDB
     const expenseRule = new ExpenseRule(req.body);
     await expenseRule.save();

@@ -1,7 +1,5 @@
 import mongoose from "mongoose";
 
-// NOTE: THIS FILE PROBABLY DOESN'T NEED ANY CHANGE
-
 const expenseRuleSchema = new mongoose.Schema({
   name: { type: String, required: true },
   account: { type: String, required: true },
